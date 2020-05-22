@@ -2,9 +2,9 @@
   "name": "image-compressor",
   "version": "1.0.0",
   "description": "Application which compress and resize your images",
-  "main": "main.js",
+  "main": "build/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "tsc && electron build/index.js"
   },
   "author": "Bartosz Dryl",
   "license": "MIT",
