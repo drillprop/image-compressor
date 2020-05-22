@@ -1,0 +1,15 @@
+{
+  "name": "image-compressor",
+  "version": "1.0.0",
+  "description": "Application which compress and resize your images",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Bartosz Dryl",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^9.0.0",
+    "typescript": "^3.9.3"
+  }
+}
