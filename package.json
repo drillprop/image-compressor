@@ -4,7 +4,8 @@
   "description": "Application which compress and resize your images",
   "main": "build/index.js",
   "scripts": {
-    "start": "tsc && electron build/index.js"
+    "compile": "tsc",
+    "start": "npm run compile && electron build/index.js"
   },
   "author": "Bartosz Dryl",
   "license": "MIT",
