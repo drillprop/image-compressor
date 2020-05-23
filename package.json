@@ -5,12 +5,17 @@
   "main": "build/index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "npm run compile && electron build/index.js"
+    "watch": "tsc -w",
+    "start": "npm run compile && electron build/index.js",
+    "nodemon": "nodemon build/index.js --exec electron build/index.js",
+    "dev": "env NODE_ENV=development concurrently \"npm run watch\" \"npm run nodemon\""
   },
   "author": "Bartosz Dryl",
   "license": "MIT",
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "electron": "^9.0.0",
+    "nodemon": "^2.0.4",
     "typescript": "^3.9.3"
   }
 }
