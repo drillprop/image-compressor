@@ -1,7 +1,19 @@
-import { app, BrowserWindow } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  Menu,
+  MenuItem,
+  MenuItemConstructorOptions,
+} from 'electron';
 import path from 'path';
 
 const isDev = process.env.NODE_ENV === 'development';
+
+const menu: (MenuItemConstructorOptions | MenuItem)[] = [
+  {
+    role: 'fileMenu',
+  },
+];
 
 const initializeAppWindow = () => {
   const appWindow = new BrowserWindow({
@@ -15,4 +27,9 @@ const initializeAppWindow = () => {
   appWindow.loadFile(path.join(__dirname, '../index.html'));
 };
 
-app.on('ready', initializeAppWindow);
+app.on('ready', () => {
+  initializeAppWindow();
+
+  const mainMenu = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(mainMenu);
+});
