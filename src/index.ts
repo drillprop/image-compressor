@@ -9,10 +9,23 @@ import path from 'path';
 
 const isDev = process.env.NODE_ENV === 'development';
 
+const devMenu: (MenuItemConstructorOptions | MenuItem)[] = [
+  {
+    label: 'Developer',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { type: 'separator' },
+      { role: 'toggleDevTools' },
+    ],
+  },
+];
+
 const menu: (MenuItemConstructorOptions | MenuItem)[] = [
   {
     role: 'fileMenu',
   },
+  ...(isDev ? devMenu : []),
 ];
 
 const initializeAppWindow = () => {
