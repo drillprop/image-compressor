@@ -33,7 +33,7 @@ const initializeAppWindow = () => {
     width: 400,
     height: 600,
     resizable: isDev ? true : false,
-    x: isDev ? -1000 : undefined, // show app in second screen
+    x: isDev ? -600 : undefined, // show app in second screen
     y: isDev ? 0 : undefined,
   });
 
