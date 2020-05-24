@@ -17,5 +17,8 @@
     "electron": "^9.0.0",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "tailwindcss": "^1.4.6"
   }
 }
