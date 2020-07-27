@@ -4,19 +4,22 @@
   "description": "Application which compress and resize your images",
   "main": "build/index.js",
   "scripts": {
-    "compile": "tsc",
-    "watch": "tsc -w",
-    "start": "npm run compile && electron build/index.js",
-    "nodemon": "nodemon build/index.js --exec electron build/index.js",
-    "dev": "env NODE_ENV=development concurrently \"npm run watch\" \"npm run nodemon\""
+    "start": "env NODE_ENV=development run-s main:build electron:watch",
+    "main:build": "parcel build src/index.ts --out-dir build --target electron",
+    "electron:watch": "run-p -r parcel:watch electron:start",
+    "electron:start": "nodemon --watch build/index.js --watch build/index.html  --exec \"electron .\"",
+    "parcel:watch": "run-p -r main:watch renderer:watch",
+    "main:watch": "parcel watch src/index.ts --out-dir build --target electron",
+    "renderer:watch": "parcel src/index.html --port 1124 --out-dir build"
   },
   "author": "Bartosz Dryl",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^5.2.0",
     "electron": "^9.0.0",
     "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
     "parcel": "^1.12.4",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.3"
   },
   "dependencies": {
