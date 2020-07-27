@@ -37,7 +37,7 @@ const initializeAppWindow = () => {
     y: isDev ? 0 : undefined,
   });
 
-  appWindow.loadFile(path.join(__dirname, '../index.html'));
+  appWindow.loadFile(path.join(__dirname, './index.html'));
 };
 
 app.on('ready', () => {
