@@ -7,10 +7,10 @@
     "start": "env NODE_ENV=development run-s main:build electron:watch",
     "main:build": "parcel build src/index.ts --target electron",
     "electron:watch": "run-p -r parcel:watch electron:start",
-    "electron:start": "nodemon --watch dist/index.js --watch dist/index.html  --exec \"electron .\"",
+    "electron:start": "nodemon --watch dist/index.js --watch src/index.html --watch src/style.css  --exec \"electron .\"",
     "parcel:watch": "run-p -r main:watch renderer:watch",
     "main:watch": "parcel watch src/index.ts --target electron",
-    "renderer:watch": "parcel src/index.html"
+    "renderer:watch": "parcel watch src/index.html --public-url ."
   },
   "author": "Bartosz Dryl",
   "license": "MIT",
