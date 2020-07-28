@@ -6,6 +6,7 @@ import {
   MenuItemConstructorOptions,
 } from 'electron';
 import path from 'path';
+import { initializeAboutWindow } from './about';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -24,6 +25,15 @@ const devMenu: (MenuItemConstructorOptions | MenuItem)[] = [
 const menu: (MenuItemConstructorOptions | MenuItem)[] = [
   {
     role: 'fileMenu',
+  },
+  {
+    label: app.name,
+    submenu: [
+      {
+        label: 'About',
+        click: initializeAboutWindow,
+      },
+    ],
   },
   ...(isDev ? devMenu : []),
 ];
