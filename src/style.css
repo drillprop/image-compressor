@@ -1,5 +1,3 @@
-h1 {
-  color: red;
-  background: black;
-  font-family: Arial, Helvetica, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
