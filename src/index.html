@@ -19,10 +19,34 @@
           <span class="block">Choose an image</span>
           <input class="hidden" type="file" name="file" id="file" />
         </label>
+        <div class="mt-6 flex justify-between w-full">
+          <label>
+            <span class="block">Width</span>
+            <input
+              class="bg-gray-500 block w-full mt-3"
+              min="0"
+              max="100"
+              type="range"
+              name="width"
+              id="width"
+            />
+          </label>
+          <label>
+            <span class="block">Height</span>
+            <input
+              class="bg-gray-500 block w-full mt-3"
+              min="0"
+              max="100"
+              type="range"
+              name="height"
+              id="height"
+            />
+          </label>
+        </div>
         <label class="mt-6 block w-full">
           <span class="block">Quality</span>
           <input
-            class="block w-full mt-3"
+            class="bg-gray-500 block w-full mt-3"
             min="0"
             max="100"
             type="range"
