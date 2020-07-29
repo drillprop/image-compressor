@@ -4,9 +4,9 @@
   "description": "",
   "main": "./src/electron.js",
   "scripts": {
-    "start": "run-p compile nodemon && electron src/electron.js",
+    "start": "run-p compile nodemon",
     "compile": "tsc ./src/electron.ts -w",
-    "nodemon": "cross-env NODE_ENV=dev nodemon --exec wait-on http://localhost:3000"
+    "nodemon": "cross-env NODE_ENV=development nodemon --exec \"wait-on http://localhost:3000 && electron src/electron.js\""
   },
   "license": "ISC",
   "devDependencies": {

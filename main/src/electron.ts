@@ -35,6 +35,9 @@ const initializeAppWindow = () => {
     resizable: isDev ? true : false,
     x: isDev ? -600 : undefined, // show app in second screen
     y: isDev ? 0 : undefined,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   appWindow.loadURL(
