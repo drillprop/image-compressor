@@ -8,21 +8,28 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container text-center">
-      <h1 class="font-bold font-mono text-3xl">
+    <div class="text-center w-3/4 mx-auto">
+      <h1 class="mt-4 font-bold uppercase text-2xl">
         image compressor
       </h1>
-      <form>
-        <div class="flex justify-center mt-10 w-full">
-          <label class="relative cursor-pointer flex flex-col items-center px-4 py-5 w-64 bg-gray-800 text-white font-medium">
-            <span class="block">Upload file</span>
-            <input
-            class="hidden"
-            type="file"
-            name="file"
-            id="file"
-            />
-          </label>
+      <form class="flex flex-col mt-10 items-center">
+        <label
+          class="cursor-pointer w-full py-4 bg-gray-800 text-white font-medium"
+        >
+          <span class="block">Choose an image</span>
+          <input class="hidden" type="file" name="file" id="file" />
+        </label>
+        <label class="mt-6 block w-full">
+          <span class="block">Quality</span>
+          <input
+            class="block w-full mt-3"
+            min="0"
+            max="100"
+            type="range"
+            name="quality"
+            id="quality"
+          />
+        </label>
       </form>
     </div>
   </body>
