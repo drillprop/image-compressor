@@ -13,17 +13,27 @@ ipcRenderer.on('response', (_, args: any[]) => {
 });
 
 const App = () => {
-  const { handleRanges, ranges } = useRangeInput({
+  const { ranges, handleRanges } = useRangeInput({
     width: 0,
     height: 0,
     quality: 0,
   });
+  const [filePath, setFilePath] = useState('');
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.files?.length && setFilePath(e.target.files[0].path);
+  };
+
+  const handleSubmit = () => {};
 
   return (
     <div className='text-center w-3/4 mx-auto'>
       <h1 className='mt-4 font-bold uppercase text-2xl'>image compressor</h1>
-      <form className='flex flex-col mt-10 items-center'>
-        <FileInput />
+      <form
+        className='flex flex-col mt-10 items-center'
+        onSubmit={handleSubmit}
+      >
+        <FileInput value={filePath} onChange={handleFileChange} />
         <div className='mt-6 flex justify-between w-full'>
           <RangeInput
             onChange={handleRanges}
