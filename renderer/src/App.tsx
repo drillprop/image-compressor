@@ -9,7 +9,11 @@ ipcRenderer.on('response', (_, args: any[]) => {
 });
 
 function App() {
-  return <div className='App'>Hello from electron</div>;
+  return (
+    <div className='mt-4 font-bold uppercase text-2xl'>
+      Hello from electron with tailwindCSS
+    </div>
+  );
 }
 
 export default App;
