@@ -37,8 +37,11 @@ const initializeAppWindow = () => {
     y: isDev ? 0 : undefined,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
+
+  if (isDev) appWindow.webContents.openDevTools({ mode: 'undocked' });
 
   appWindow.loadURL(
     isDev
