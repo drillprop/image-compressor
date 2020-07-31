@@ -6,11 +6,15 @@ type Props = {
 };
 
 const FileInput: React.FC<Props> = ({ value, onChange }) => {
+  const fileName = value.split('\\').reverse()[0];
   return (
-    <label className='cursor-pointer w-full py-4 bg-gray-800 text-white font-medium'>
-      <span className='block'>Choose an image</span>
+    <label
+      className={`cursor-pointer w-full py-4 bg-gray-700 ${
+        fileName && 'bg-gray-800'
+      } hover:bg-gray-800 text-white font-medium`}
+    >
+      <span className='block'>{fileName ? fileName : 'Choose an image'}</span>
       <input
-        value={value}
         className='hidden'
         onChange={onChange}
         type='file'
