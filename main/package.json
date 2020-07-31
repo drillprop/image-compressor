@@ -2,11 +2,11 @@
   "name": "main",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/electron.js",
+  "main": "./dist/electron.js",
   "scripts": {
     "start": "run-p compile nodemon",
-    "compile": "tsc ./src/electron.ts -w",
-    "nodemon": "cross-env NODE_ENV=development nodemon --exec \"wait-on http://localhost:3000 && electron src/electron.js\""
+    "compile": "tsc src/electron.ts -w --outDir dist",
+    "nodemon": "cross-env NODE_ENV=development nodemon --exec \"wait-on http://localhost:3000 && electron .\""
   },
   "license": "ISC",
   "devDependencies": {
