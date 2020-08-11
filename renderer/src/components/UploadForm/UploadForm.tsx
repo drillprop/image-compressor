@@ -1,19 +1,29 @@
 import React from 'react';
+import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
+import { ReactComponent as UploadIcon } from '../../assets/upload-icon.svg';
 
 const UploadForm = () => {
   return (
-    <form className='flex flex-col mt-10 items-center'>
-      <h2 className='text-xl font-medium'>UPLOAD AN IMAGE</h2>
-      <label className='mt-5 cursor-pointer w-full py-4 bg-blue-700 hover:bg-blue-800 text-white font-medium'>
-        <span className='block'>Choose an Image</span>
+    <form className='flex flex-col mt-12 items-center'>
+      <h2 className='text-xl font-bold'>UPLOAD AN IMAGE</h2>
+      <label className=' flex items-center justify-center rounded mt-3 cursor-pointer w-10/12 py-4 bg-green-700 hover:bg-green-800 text-white font-medium'>
+        <div className='mr-2'>
+          <ImageIcon />
+        </div>
+        <span> Choose an Image</span>
         <input className='hidden' type='file' name='file' id='file' />
       </label>
-      <h2 className='mt-3 text-xl font-medium'>OR</h2>
+      <h2 className='mt-8 text-xl font-bold'>OR</h2>
       <div
-        className='mt-5 w-full h-48 flex items-center justify-center
-       bg-blue-500 text-white font-medium'
+        className='rounded mt-3 w-full h-48 flex items-center justify-center
+         bg-green-600 text-white font-medium'
       >
-        Drag and drop file here
+        <div className='rounded w-11/12 h-40 flex items-center justify-center border-2 border-dashed border-green-400'>
+          <div className='mr-2'>
+            <UploadIcon />
+          </div>
+          Drag and drop file here
+        </div>
       </div>
     </form>
   );
