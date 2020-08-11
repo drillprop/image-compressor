@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
 import { ReactComponent as UploadIcon } from '../../assets/upload-icon.svg';
 
@@ -11,7 +11,14 @@ const UploadForm = () => {
           <ImageIcon />
         </div>
         <span> Choose an Image</span>
-        <input className='hidden' type='file' name='file' id='file' />
+        <input
+          multiple
+          accept='.jpeg, .png, .jpg, .bmp'
+          className='hidden'
+          type='file'
+          name='file'
+          id='file'
+        />
       </label>
       <h2 className='mt-5 text-xl font-bold'>OR</h2>
       <div
