@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "slash": "^3.0.0"
   },
   "devDependencies": {
@@ -39,7 +38,7 @@
     "release": "run-s react-prebuild react-build electron-builder --publish=always",
     "build": "run-s build:css react-prebuild react-build electron-build",
     "start": "cross-env BROWSER=none npm-run-all build:css --parallel watch:css react-start",
-    "watch:css": "nodemon -e css --ignore src/assets/tailwind.output.css -x npm run build:css",
+    "watch:css": "postcss -w src/assets/tailwind.css -o src/assets/tailwind.output.css",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/tailwind.output.css"
   },
   "eslintConfig": {
