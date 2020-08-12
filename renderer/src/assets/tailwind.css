@@ -24,3 +24,19 @@
   font-weight: 700;
   font-style: normal;
 }
+
+.form {
+  @apply mt-5 flex flex-col items-center;
+}
+
+.btn {
+  @apply mt-8 bg-green-700 text-white font-medium p-3 rounded w-full;
+}
+
+.ranges-label {
+  @apply flex flex-col rounded mt-1 cursor-pointer w-full font-medium text-sm;
+}
+
+.form-heading {
+  @apply text-lg font-bold;
+}
