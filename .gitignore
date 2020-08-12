@@ -3,3 +3,4 @@ build
 .cache
 dist
 main/src/electron.js
+tailwind.output.css
