@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './assets/tailwind.output.css';
 import './assets/inputs.css';
+import GlobalContextProvider from './context/GlobalContext';
 
 declare global {
   interface Window {
@@ -13,7 +14,9 @@ declare global {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalContextProvider>
+      <App />
+    </GlobalContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
