@@ -1,68 +1,65 @@
-import React, { useRef, useEffect } from 'react';
-import { useGlobalContext } from '../../context/GlobalContext';
+import { AllElectron } from 'electron';
+import React, { useEffect, useState } from 'react';
+import { useGlobalDispatch } from '../../context/GlobalContext';
+import RangeInput from './RangeInput/RangeInput';
+import ChangeOutputInput from './ChangeOutputInput/ChangeOutputInput';
+
+const { ipcRenderer }: AllElectron = window.require('electron');
 
 const RangesForm = () => {
-  const { state, dispatch } = useGlobalContext();
-  const { width, height, quality } = state;
-  const outputInputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useGlobalDispatch();
+  const [fields, setFields] = useState({
+    width: 0,
+    height: 0,
+    quality: 100,
+    outputFolder: '',
+  });
+  const { width, height, quality, outputFolder } = fields;
+
+  useEffect(() => {
+    ipcRenderer.on('change:directory', (_, outputFolder) => {
+      if (outputFolder) setFields({ ...fields, outputFolder });
+    });
+  }, [fields]);
 
   const handleChangeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     if (name === 'quality' || name === 'width' || name === 'height') {
-      dispatch({
-        type: 'CHANGE_FILE_PROPERTY',
-        property: name,
-        value: parseInt(value),
+      setFields({
+        ...fields,
+        [name]: parseInt(value),
       });
     }
   };
 
   return (
-    <form className='form'>
+    <form
+      className='form'
+      onSubmit={() =>
+        dispatch({
+          type: 'SET_FILE_OPTIONS',
+          payload: fields,
+        })
+      }
+    >
       <h2 className='form-heading'>CHANGE SIZE</h2>
-      <label className='ranges-label'>
-        <span className='text-left'>width</span>
-        <input
-          type='range'
-          value={width}
-          name='width'
-          onChange={handleChangeRange}
-        />
-        <span className='text-right'>{width}</span>
-      </label>
-      <label className='ranges-label'>
-        <span className='text-left '>height</span>
-        <input
-          type='range'
-          value={height}
-          name='height'
-          onChange={handleChangeRange}
-        />
-        <span className='text-right '>{height}</span>
-      </label>
+      <RangeInput
+        onChange={handleChangeRange}
+        value={width}
+        inputName={'width'}
+      />
+      <RangeInput
+        onChange={handleChangeRange}
+        value={height}
+        inputName={'height'}
+      />
       <h2 className='form-heading'>CHANGE QUALITY</h2>
-      <label className='ranges-label'>
-        <span className='text-left '>quality</span>
-        <input
-          type='range'
-          value={quality}
-          name='quality'
-          onChange={handleChangeRange}
-        />
-        <span className='text-right'>{quality}</span>
-      </label>
-      <label className='mt-1 w-full font-medium m-auto'>
-        <span className='text-sm'>OUTPUT FOLDER</span>
-        <div className='m-auto rounded mt-1 cursor-pointer w-10/12 py-3 font-medium border-2 border-dashed border-green-400 '>
-          <span>c:/image-compressor</span>
-          <input
-            className='hidden'
-            name='directory'
-            id='directory'
-            ref={outputInputRef}
-          />
-        </div>
-      </label>
+      <RangeInput
+        onChange={handleChangeRange}
+        value={quality}
+        inputName={'quality'}
+      />
+      <ChangeOutputInput value={outputFolder} />
       <button className='btn' type='submit'>
         COMPRESS
       </button>
