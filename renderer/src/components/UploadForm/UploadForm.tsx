@@ -1,28 +1,26 @@
-import React from 'react';
-import slash from 'slash';
+import React, { useState } from 'react';
 import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
-import { useGlobalContext } from '../../context/GlobalContext';
-import ImagePreview from './ImagePreview/ImagePreview';
+import { useGlobalDispatch } from '../../context/GlobalContext';
 import DragAndDrop from './DragAndDrop/DragAndDrop';
+import ImagePreview from './ImagePreview/ImagePreview';
 
 const UploadForm = () => {
-  const { state, dispatch } = useGlobalContext();
-  const { path } = state;
+  const [filePath, setFilePath] = useState('');
+  const dispatch = useGlobalDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (path) {
-      dispatch({ type: 'INC_STEP' });
-    }
+    e.preventDefault();
+    if (filePath) dispatch({ type: 'SET_FILE_PATH', filePath });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'CHANGE_FILE', path: e.currentTarget.value });
+    setFilePath(e.currentTarget.value);
   };
 
   return (
     <form className='form' onSubmit={handleSubmit}>
-      {path ? (
-        <ImagePreview />
+      {filePath ? (
+        <ImagePreview filePath={filePath} removeImage={() => setFilePath('')} />
       ) : (
         <>
           <h2 className='form-heading'>UPLOAD AN IMAGE</h2>
