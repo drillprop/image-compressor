@@ -1,8 +1,13 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
+type propertyTypes = 'width' | 'height' | 'quality';
+
 export type Action =
   | { type: 'CHANGE_FILE'; path: string }
-  | { type: 'INC_STEP' };
+  | { type: 'INC_STEP' }
+  | { type: 'CHANGE_FILE_PROPERTY'; property: propertyTypes; value: number }
+  | { type: 'CHANGE_OUTPUT'; outputFolder: string };
+
 type State = typeof initialState;
 type Dispatch = (action: Action) => void;
 
@@ -11,7 +16,7 @@ const initialState = {
   path: '',
   width: 0,
   height: 0,
-  quality: 0,
+  quality: 100,
   outputFolder: '',
 };
 
@@ -26,6 +31,16 @@ const reducer = (state = initialState, action: Action): typeof initialState => {
       return {
         ...state,
         step: state.step + 1,
+      };
+    case 'CHANGE_FILE_PROPERTY':
+      return {
+        ...state,
+        [action.property]: action.value,
+      };
+    case 'CHANGE_OUTPUT':
+      return {
+        ...state,
+        outputFolder: action.outputFolder,
       };
 
     default:
