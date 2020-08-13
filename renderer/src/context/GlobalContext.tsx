@@ -48,10 +48,8 @@ const reducer = (state = initialState, action: Action): typeof initialState => {
   }
 };
 
-const GlobalContextState = React.createContext<State | undefined>(undefined);
-const GlobalContextDispatch = React.createContext<Dispatch | undefined>(
-  undefined
-);
+const GlobalContextState = createContext<State | undefined>(undefined);
+const GlobalContextDispatch = createContext<Dispatch | undefined>(undefined);
 
 const GlobalContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
