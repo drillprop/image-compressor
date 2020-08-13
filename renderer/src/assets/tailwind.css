@@ -42,7 +42,7 @@
 }
 
 .ranges-label {
-  @apply flex flex-col rounded mt-1 cursor-pointer w-full font-medium text-sm;
+  @apply flex flex-col rounded cursor-pointer w-full font-medium text-sm;
 }
 
 .form-heading {
