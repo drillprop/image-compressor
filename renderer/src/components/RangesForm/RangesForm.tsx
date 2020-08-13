@@ -24,24 +24,25 @@ const RangesForm = () => {
 
   const handleChangeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
-    if (name === 'quality' || name === 'width' || name === 'height') {
+    const isNumericField =
+      name === 'quality' || name === 'width' || name === 'height';
+    if (isNumericField)
       setFields({
         ...fields,
         [name]: parseInt(value),
       });
-    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch({
+      type: 'SET_FILE_OPTIONS',
+      payload: fields,
+    });
   };
 
   return (
-    <form
-      className='form'
-      onSubmit={() =>
-        dispatch({
-          type: 'SET_FILE_OPTIONS',
-          payload: fields,
-        })
-      }
-    >
+    <form className='form' onSubmit={handleSubmit}>
       <h2 className='form-heading'>CHANGE SIZE</h2>
       <RangeInput
         onChange={handleChangeRange}

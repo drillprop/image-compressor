@@ -38,6 +38,7 @@ const reducer = (state = initialState, action: Action): typeof initialState => {
       return {
         ...state,
         ...action.payload,
+        step: state.step + 1,
       };
 
     default:
