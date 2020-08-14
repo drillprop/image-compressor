@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/electron": "^1.6.10",
+    "@types/node": "12.12.54",
     "@types/sharp": "^0.25.1",
     "cross-env": "^7.0.2",
     "nodemon": "^2.0.4",
