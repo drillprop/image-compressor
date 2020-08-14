@@ -6,6 +6,7 @@ import {
   MenuItemConstructorOptions,
   ipcMain,
   dialog,
+  protocol,
 } from 'electron';
 import * as path from 'path';
 
@@ -42,6 +43,7 @@ const initializeAppWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
+      webSecurity: false,
     },
   });
 
@@ -56,19 +58,24 @@ const initializeAppWindow = () => {
 };
 
 app.on('ready', () => {
+  protocol.registerFileProtocol('file', (request, callback) => {
+    const pathname = request.url.replace('file:///', '');
+    callback(pathname);
+  });
+
   initializeAppWindow();
 
   const mainMenu = Menu.buildFromTemplate(menu);
   Menu.setApplicationMenu(mainMenu);
 });
 
-ipcMain.on('change:directory', async (e, options) => {
+ipcMain.on('change:directory', async () => {
   if (!appWindow) return;
-  const directory = await dialog.showOpenDialog(appWindow, {
+  const directoryDialog = await dialog.showOpenDialog(appWindow, {
     properties: ['openDirectory'],
   });
-  if (!directory.canceled) {
-    const [outputFolder] = directory.filePaths;
+  if (!directoryDialog.canceled) {
+    const [outputFolder] = directoryDialog.filePaths;
     appWindow.webContents.send('change:directory', outputFolder);
   }
 });
