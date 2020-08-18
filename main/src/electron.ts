@@ -9,6 +9,7 @@ import {
   protocol,
 } from 'electron';
 import * as path from 'path';
+import sharp from 'sharp';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -77,5 +78,20 @@ ipcMain.on('change:directory', async () => {
   if (!directoryDialog.canceled) {
     const [outputFolder] = directoryDialog.filePaths;
     appWindow.webContents.send('change:directory', outputFolder);
+  }
+});
+
+ipcMain.on('image:upload', async () => {
+  if (!appWindow) return;
+  const fileDialog = await dialog.showOpenDialog(appWindow, {
+    properties: ['openFile'],
+    filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg', 'gif'] }],
+  });
+  if (!fileDialog.canceled) {
+    const filePath = fileDialog.filePaths[0];
+    const img = sharp(filePath);
+    const { width, height } = await img.metadata();
+
+    appWindow.webContents.send('image:upload', { filePath, width, height });
   }
 });
