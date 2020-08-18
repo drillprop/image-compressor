@@ -19,15 +19,19 @@ const ImagePreview = ({ filePath, removeImage }: Props) => {
     <>
       <h2 className='form-heading'>UPLOADED IMAGE</h2>
       <div className='mt-4 w-full'>
-        <div className='border border-gray-500 rounded-sm w-full py-32 relative'>
-          <img src={slash(filePath)} alt={fileName} />
+        <div className='border border-gray-500 rounded-sm w-full h-64 relative flex justify-center items-center'>
+          <img
+            className='w-full h-full object-cover'
+            src={slash(filePath)}
+            alt={fileName}
+          />
           <button
             className='absolute top-0 right-0 mr-2 mt-2'
             onClick={handleRemoveImg}
           >
             <CloseIcon />
           </button>
-          {fileName}
+          <span className='bg-gray-100 py-1 px-4 absolute'>{fileName}</span>
         </div>
         <button type='submit' className='btn'>
           UPLOAD
