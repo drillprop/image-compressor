@@ -1,9 +1,10 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 type fileOptions = 'width' | 'height' | 'quality' | 'outputFolder';
+type fileInitial = 'width' | 'height' | 'filePath';
 
 export type Action =
-  | { type: 'SET_FILE_PATH'; filePath: string }
+  | { type: 'SET_FILE'; payload: Pick<State, fileInitial> }
   | {
       type: 'SET_FILE_OPTIONS';
       payload: Pick<State, fileOptions>;
@@ -23,10 +24,10 @@ const initialState = {
 
 const reducer = (state = initialState, action: Action): typeof initialState => {
   switch (action.type) {
-    case 'SET_FILE_PATH':
+    case 'SET_FILE':
       return {
         ...state,
-        filePath: action.filePath,
+        ...action.payload,
         step: state.step + 1,
       };
     case 'SET_FILE_OPTIONS':
