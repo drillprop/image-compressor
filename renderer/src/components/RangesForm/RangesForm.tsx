@@ -1,16 +1,16 @@
 import { AllElectron } from 'electron';
 import React, { useEffect, useState } from 'react';
-import { useGlobalDispatch } from '../../context/GlobalContext';
-import RangeInput from './RangeInput/RangeInput';
+import { useGlobalContext } from '../../context/GlobalContext';
 import ChangeOutputInput from './ChangeOutputInput/ChangeOutputInput';
+import RangeInput from './RangeInput/RangeInput';
 
 const { ipcRenderer }: AllElectron = window.require('electron');
 
 const RangesForm = () => {
-  const dispatch = useGlobalDispatch();
+  const { dispatch, state } = useGlobalContext();
   const [fields, setFields] = useState({
-    width: 0,
-    height: 0,
+    width: state.width,
+    height: state.height,
     quality: 100,
     outputFolder: '',
   });
@@ -48,11 +48,13 @@ const RangesForm = () => {
         onChange={handleChangeRange}
         value={width}
         inputName={'width'}
+        max={state.width}
       />
       <RangeInput
         onChange={handleChangeRange}
         value={height}
         inputName={'height'}
+        max={state.height}
       />
       <h2 className='form-heading'>CHANGE QUALITY</h2>
       <RangeInput
