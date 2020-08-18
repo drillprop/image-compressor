@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import { AllElectron } from 'electron';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
 import { useGlobalDispatch } from '../../context/GlobalContext';
 import DragAndDrop from './DragAndDrop/DragAndDrop';
 import ImagePreview from './ImagePreview/ImagePreview';
 
+const { ipcRenderer }: AllElectron = window.require('electron');
+
+const initialState = {
+  filePath: '',
+  width: 0,
+  height: 0,
+};
+
 const UploadForm = () => {
-  const [filePath, setFilePath] = useState('');
+  const [imgFile, setimgFile] = useState(initialState);
   const dispatch = useGlobalDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (filePath) dispatch({ type: 'SET_FILE_PATH', filePath });
+    if (imgFile) dispatch({ type: 'SET_FILE', payload: imgFile });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilePath(e.currentTarget.value);
+  useEffect(() => {
+    ipcRenderer.on('image:upload', (_, imgFile) => {
+      setimgFile({ ...imgFile });
+    });
+  }, []);
+
+  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    ipcRenderer.send('image:upload');
   };
 
   return (
     <form className='form' onSubmit={handleSubmit}>
-      {filePath ? (
-        <ImagePreview filePath={filePath} removeImage={() => setFilePath('')} />
+      {imgFile.filePath ? (
+        <ImagePreview
+          filePath={imgFile.filePath}
+          removeImage={() => setimgFile(initialState)}
+        />
       ) : (
         <>
           <h2 className='form-heading'>UPLOAD AN IMAGE</h2>
@@ -30,7 +49,7 @@ const UploadForm = () => {
             </div>
             <span>Choose an image</span>
             <input
-              onChange={handleChange}
+              onClick={handleClick}
               accept='.jpeg, .png, .jpg, .bmp'
               className='hidden'
               type='file'
