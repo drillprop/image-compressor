@@ -3,8 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 import ChangeOutputInput from './ChangeOutputInput/ChangeOutputInput';
 import RangeInput from './RangeInput/RangeInput';
+import slash from 'slash';
 
-const { ipcRenderer }: AllElectron = window.require('electron');
+const { ipcRenderer, remote }: AllElectron = window.require('electron');
+
+const path = slash(remote.app.getPath('home') + '/image-compressor');
 
 const RangesForm = () => {
   const { dispatch, state } = useGlobalContext();
@@ -12,7 +15,7 @@ const RangesForm = () => {
     width: state.width,
     height: state.height,
     quality: 80,
-    outputFolder: '',
+    outputFolder: path,
   });
   const { width, height, quality, outputFolder } = fields;
 
@@ -28,7 +31,11 @@ const RangesForm = () => {
 
   useEffect(() => {
     const compressImage = (_: IpcRendererEvent, compressedImgPath: string) => {
-      if (compressedImgPath) dispatch({ type: 'COMPRESS_IMAGE_SUCCESS' });
+      if (compressedImgPath)
+        dispatch({
+          type: 'COMPRESS_IMAGE_SUCCESS',
+          payload: compressedImgPath,
+        });
     };
     ipcRenderer.on('image:compress', compressImage);
     return () => {
