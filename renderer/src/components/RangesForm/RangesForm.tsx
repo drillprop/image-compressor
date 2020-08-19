@@ -44,13 +44,13 @@ const RangesForm = () => {
 
       if (name === 'width' || name === 'height') {
         const oppositeAxis = name === 'width' ? 'height' : 'width';
-
+        const oppositeAxisValue = Math.ceil(
+          (state[oppositeAxis] / state[name]) * parseInt(value)
+        );
         setFields((fields) => ({
           ...fields,
           [name]: parseInt(value),
-          [oppositeAxis]: Math.ceil(
-            (state[oppositeAxis] / state[name]) * parseInt(value)
-          ),
+          [oppositeAxis]: oppositeAxisValue,
         }));
       }
     },
