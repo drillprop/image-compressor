@@ -5,10 +5,9 @@ type fileInitial = 'width' | 'height' | 'filePath';
 
 export type Action =
   | { type: 'SET_FILE'; payload: Pick<State, fileInitial> }
-  | {
-      type: 'SET_FILE_OPTIONS';
-      payload: Pick<State, fileOptions>;
-    };
+  | { type: 'COMPRESS_IMAGE_START'; payload: Pick<State, fileOptions> }
+  | { type: 'COMPRESS_IMAGE_SUCCESS' }
+  | { type: 'COMPRESS_IMAGE_ERROR'; payload: string };
 
 type State = typeof initialState;
 type Dispatch = (action: Action) => void;
@@ -20,6 +19,8 @@ const initialState = {
   height: 0,
   quality: 100,
   outputFolder: '',
+  error: '',
+  loading: false,
 };
 
 const reducer = (state = initialState, action: Action): typeof initialState => {
@@ -30,13 +31,23 @@ const reducer = (state = initialState, action: Action): typeof initialState => {
         ...action.payload,
         step: state.step + 1,
       };
-    case 'SET_FILE_OPTIONS':
+    case 'COMPRESS_IMAGE_START':
       return {
         ...state,
         ...action.payload,
-        step: state.step + 1,
+        loading: true,
       };
-
+    case 'COMPRESS_IMAGE_SUCCESS':
+      return {
+        ...state,
+        step: state.step + 1,
+        loading: false,
+      };
+    case 'COMPRESS_IMAGE_ERROR':
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
