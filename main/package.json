@@ -11,6 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/electron": "^1.6.10",
+    "@types/imagemin": "^7.0.0",
+    "@types/imagemin-mozjpeg": "^8.0.0",
     "@types/node": "12.12.54",
     "@types/sharp": "^0.25.1",
     "cross-env": "^7.0.2",
@@ -21,6 +23,9 @@
   },
   "dependencies": {
     "electron": "^9.1.2",
+    "imagemin": "^7.0.1",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.0",
     "sharp": "^0.25.4",
     "slash": "^3.0.0"
   }
