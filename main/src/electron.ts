@@ -10,6 +10,10 @@ import {
 } from 'electron';
 import * as path from 'path';
 import sharp from 'sharp';
+import imagemin from 'imagemin';
+import jpegplugin from 'imagemin-mozjpeg';
+import pngplugin from 'imagemin-pngquant';
+import slash from 'slash';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -95,3 +99,30 @@ ipcMain.on('image:upload', async () => {
     appWindow.webContents.send('image:upload', { filePath, width, height });
   }
 });
+
+ipcMain.on(
+  'image:compress',
+  async (_, { quality, width, height, filePath, outputFolder }) => {
+    if (!appWindow) return;
+    const fileName = slash(filePath).split('/').pop()?.split('.').shift();
+    const newFilePath = slash(`${outputFolder}/${fileName}-compressed.jpg`);
+
+    try {
+      // resize with sharp
+      await sharp(filePath).resize({ width, height }).toFile(newFilePath);
+
+      // change quality with imagemin
+      await imagemin([newFilePath], {
+        destination: outputFolder,
+        plugins: [
+          jpegplugin({ quality }),
+          pngplugin({ quality: [quality / 10, quality / 10] }),
+        ],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    appWindow.webContents.send('image:compress', newFilePath);
+  }
+);
