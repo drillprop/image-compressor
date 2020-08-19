@@ -1,4 +1,4 @@
-import { AllElectron } from 'electron';
+import { AllElectron, IpcRendererEvent } from 'electron';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
 import { useGlobalDispatch } from '../../context/GlobalContext';
@@ -23,9 +23,14 @@ const UploadForm = () => {
   };
 
   useEffect(() => {
-    ipcRenderer.on('image:upload', (_, imgFile) => {
+    const setFile = (_: IpcRendererEvent, imgFile: typeof initialState) => {
       setimgFile({ ...imgFile });
-    });
+    };
+    ipcRenderer.on('image:upload', setFile);
+
+    return () => {
+      ipcRenderer.removeListener('image:upload', setFile);
+    };
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
