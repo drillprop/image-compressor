@@ -1,5 +1,5 @@
-import { AllElectron } from 'electron';
-import React, { useEffect, useState, useCallback } from 'react';
+import { AllElectron, IpcRendererEvent } from 'electron';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 import ChangeOutputInput from './ChangeOutputInput/ChangeOutputInput';
 import RangeInput from './RangeInput/RangeInput';
@@ -17,15 +17,23 @@ const RangesForm = () => {
   const { width, height, quality, outputFolder } = fields;
 
   useEffect(() => {
-    ipcRenderer.on('change:directory', (_, outputFolder) => {
-      if (outputFolder) setFields({ ...fields, outputFolder });
-    });
-  }, [fields]);
+    const changeDirectory = (_: IpcRendererEvent, outputFolder: string) => {
+      if (outputFolder) setFields((fields) => ({ ...fields, outputFolder }));
+    };
+    ipcRenderer.on('change:directory', changeDirectory);
+    return () => {
+      ipcRenderer.removeListener('change:directory', changeDirectory);
+    };
+  }, [outputFolder]);
 
   useEffect(() => {
-    ipcRenderer.on('image:compress', (_, compressedImgPath) => {
+    const compressImage = (_: IpcRendererEvent, compressedImgPath: string) => {
       if (compressedImgPath) dispatch({ type: 'COMPRESS_IMAGE_SUCCESS' });
-    });
+    };
+    ipcRenderer.on('image:compress', compressImage);
+    return () => {
+      ipcRenderer.removeListener('image:compress', compressImage);
+    };
   }, [dispatch]);
 
   const handleChangeRange = useCallback(
