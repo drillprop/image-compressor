@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 type fileOptions = 'width' | 'height' | 'quality' | 'outputFolder';
-type fileInitial = 'width' | 'height' | 'filePath';
+type fileInitial = 'width' | 'height' | 'imgPath';
 
 export type Action =
   | { type: 'SET_FILE'; payload: Pick<State, fileInitial> }
@@ -16,7 +16,7 @@ type Dispatch = (action: Action) => void;
 
 const initialState = {
   step: 1,
-  filePath: '',
+  imgPath: '',
   width: 0,
   height: 0,
   quality: 100,

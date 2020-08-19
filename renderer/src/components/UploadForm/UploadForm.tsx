@@ -8,7 +8,7 @@ import ImagePreview from './ImagePreview/ImagePreview';
 const { ipcRenderer }: AllElectron = window.require('electron');
 
 const initialState = {
-  filePath: '',
+  imgPath: '',
   width: 0,
   height: 0,
 };
@@ -35,9 +35,9 @@ const UploadForm = () => {
 
   return (
     <form className='form' onSubmit={handleSubmit}>
-      {imgFile.filePath ? (
+      {imgFile.imgPath ? (
         <ImagePreview
-          filePath={imgFile.filePath}
+          imgPath={imgFile.imgPath}
           removeImage={() => setimgFile(initialState)}
         />
       ) : (

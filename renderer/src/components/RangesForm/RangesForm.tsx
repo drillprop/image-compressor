@@ -70,7 +70,7 @@ const RangesForm = () => {
       type: 'COMPRESS_IMAGE_START',
       payload: fields,
     });
-    ipcRenderer.send('image:compress', { ...fields, filePath: state.filePath });
+    ipcRenderer.send('image:compress', { ...fields, filePath: state.imgPath });
   };
 
   return (

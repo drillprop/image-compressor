@@ -3,12 +3,12 @@ import slash from 'slash';
 import { ReactComponent as CloseIcon } from '../../../assets/close-icon.svg';
 
 type Props = {
-  filePath: string;
+  imgPath: string;
   removeImage: () => void;
 };
 
-const ImagePreview = ({ filePath, removeImage }: Props) => {
-  const fileName = slash(filePath).split('/').pop();
+const ImagePreview = ({ imgPath, removeImage }: Props) => {
+  const fileName = slash(imgPath).split('/').pop();
   const handleRemoveImg = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -22,7 +22,7 @@ const ImagePreview = ({ filePath, removeImage }: Props) => {
         <div className='border border-gray-500 rounded-sm w-full h-64 relative flex justify-center items-center'>
           <img
             className='w-full h-full object-cover'
-            src={slash(filePath)}
+            src={slash(imgPath)}
             alt={fileName}
           />
           <button
