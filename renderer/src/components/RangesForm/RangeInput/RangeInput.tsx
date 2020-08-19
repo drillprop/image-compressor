@@ -5,6 +5,7 @@ type Props = {
   value: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   max?: number;
+  bottomTooltip?: string;
 };
 
 const RangeInput: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const RangeInput: React.FC<Props> = ({
   onChange,
   value,
   max = 100,
+  bottomTooltip,
 }) => {
   return (
     <label className='ranges-label'>
@@ -24,7 +26,7 @@ const RangeInput: React.FC<Props> = ({
         onChange={onChange}
         step={1}
       />
-      <span className='text-right'>{value}</span>
+      <span className='text-right'>{bottomTooltip}</span>
     </label>
   );
 };
