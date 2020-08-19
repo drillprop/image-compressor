@@ -8,27 +8,23 @@ type Props = {
   bottomTooltip?: string;
 };
 
-const RangeInput: React.FC<Props> = ({
-  inputName,
-  onChange,
-  value,
-  max = 100,
-  bottomTooltip,
-}) => {
-  return (
-    <label className='ranges-label'>
-      <span className='text-left'>{inputName}</span>
-      <input
-        max={max}
-        type='range'
-        value={value}
-        name={inputName}
-        onChange={onChange}
-        step={1}
-      />
-      <span className='text-right'>{bottomTooltip}</span>
-    </label>
-  );
-};
+const RangeInput = React.memo<Props>(
+  ({ inputName, onChange, value, max = 100, bottomTooltip }) => {
+    return (
+      <label className='ranges-label'>
+        <span className='text-left'>{inputName}</span>
+        <input
+          max={max}
+          type='range'
+          value={value}
+          name={inputName}
+          onChange={onChange}
+          step={1}
+        />
+        <span className='text-right'>{bottomTooltip}</span>
+      </label>
+    );
+  }
+);
 
 export default RangeInput;
